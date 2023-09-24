@@ -5,9 +5,15 @@ const Task = require('./controllers/tasks');
 
 const router= express.Router();
 
-router.get('/users/:id', User.get)
+router.get('/users-view/:id', User.getView)
+
+router.get('/users', User.auth, User.get)
 
 router.post('/users', User.post)
+
+router.post('/users-login', User.postLogin)
+
+router.post('/users-register', User.postRegister)
 
 router.put('/users/:id', User.put)
 
