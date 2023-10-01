@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 
 const getView=(req,res, next)=>{
    
-    let id = req.params.id;
+    let id = req.user.email;
 
    
 
@@ -34,8 +34,9 @@ const getView=(req,res, next)=>{
 
    const auth=(req,res, next)=>{
 try{
-    const token = req.headers.token
-        
+    // const token = req.headers.token
+
+        token=req.session.user;
     var decoded = jwt.verify(token, 'shhhhh');
     req.user =  {"email":decoded.email}
      return next();
@@ -131,7 +132,9 @@ const postRegister=(req,res, next)=>{
 
                 result['token']=token
 
-              return  res.status('200').send(result)
+                 req.session.user=token
+                 return res.redirect('/users-view');
+              // return  res.status('200').send(result)
                }else{
                 return  res.status('404').send({"error":true, "message": "Wrong Credencials"})
 

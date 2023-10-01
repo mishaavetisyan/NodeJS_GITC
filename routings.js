@@ -5,7 +5,12 @@ const Task = require('./controllers/tasks');
 
 const router= express.Router();
 
-router.get('/users-view/:id', User.getView)
+router.get('/users-view',User.auth, User.getView)
+
+router.get('/login', (req,res)=>{
+
+    res.render('pages/login')
+})
 
 router.get('/users', User.auth, User.get)
 

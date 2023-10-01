@@ -1,11 +1,19 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const session = require('express-session');
+
 // set the view engine to ejs
 const routes = require('./routings')
 
 
 
 const app = express()
+
+app.use(
+    session({
+        secret: 'session_key'      })
+);
+
 app.set('view engine', 'ejs');
 
 
