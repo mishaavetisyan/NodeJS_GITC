@@ -1,7 +1,21 @@
 const express = require('express');
 
+const multer = require("multer");
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'assets/public/files')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+var upload = multer({ storage: storage })
+
 const User = require('./controllers/user');
 const Task = require('./controllers/tasks');
+
+
 
 const router= express.Router();
 
@@ -15,6 +29,9 @@ router.get('/login', (req,res)=>{
 router.get('/users', User.auth, User.get)
 
 router.post('/users', User.post)
+
+router.post('/upload',upload.single('file'), User.upload)
+
 
 router.post('/users-login', User.postLogin)
 

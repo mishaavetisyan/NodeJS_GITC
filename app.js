@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session');
+const path = require('path');
 
 // set the view engine to ejs
 const routes = require('./routings')
@@ -8,7 +9,7 @@ const routes = require('./routings')
 
 
 const app = express()
-
+app.use(express.static(path.join(__dirname, 'assets'))); 
 app.use(
     session({
         secret: 'session_key'      })

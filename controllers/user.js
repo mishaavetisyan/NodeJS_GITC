@@ -148,6 +148,10 @@ const postRegister=(req,res, next)=>{
           
           }
 
+          
+
+       
+              
 
       const post=(req,res, next)=>{
         //  const userData={};
@@ -212,7 +216,7 @@ const postRegister=(req,res, next)=>{
 
 
 
-        const user_delete=(req,res, next)=>{
+      const user_delete=(req,res, next)=>{
 
             const id = req.params.id;
             let users= fs.readFileSync(path.resolve('files/users.json'),'utf-8')
@@ -242,4 +246,18 @@ const postRegister=(req,res, next)=>{
             
             }
 
-   module.exports={get,post,put,user_delete, getView, postRegister,postLogin, auth}
+      const upload=(req,res, next)=>{
+        
+                    
+              let result={url:`http://localhost:8000/public/files/${req.file.originalname}`};
+                //    const id=  req.body.id;
+              
+           
+              
+                   res.send(result)
+                  
+                  
+                  }
+    
+
+   module.exports={get,post,put,user_delete, getView, postRegister,postLogin, auth,upload}
