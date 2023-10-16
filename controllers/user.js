@@ -2,6 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 var jwt = require('jsonwebtoken');
+const db = require('../db');
+
 
 
 const getView=(req,res, next)=>{
@@ -91,24 +93,33 @@ const postRegister=(req,res, next)=>{
   let result={};
         const data=  req.body;
       //  userData[data.email]=data;
-  
-        let usersDbData=fs.readFileSync(path.resolve('files/users.json'),'utf-8')
-        console.log(usersDbData);
-        usersDbData=JSON.parse(usersDbData);
-        if(usersDbData[data.email]){
-          result={"error":true,"message":"email already exists"}
-        }else{
-       
-        usersDbData[data.email]=data;
-  
-  
-  
-        fs.writeFileSync(path.resolve('files/users.json'),JSON.stringify(usersDbData))
-  
-       result = {"status":"created","data":`hello ${data.name} ${data.age}`};
+     db.query(`insert into users (email,first_name,last_name,password) values ('${data.email}','${data.first_name}','${data.last_name}','${data.password}') ;`,
+     (err, rows, fields) => {
+        if (err) {return res.send(err)}
+        else{
+        console.log('The solution is: ', rows)
+     return res.send({"status":"created"})
         }
+      });
+
   
-       res.send(result)
+      //   let usersDbData=fs.readFileSync(path.resolve('files/users.json'),'utf-8')
+      //   console.log(usersDbData);
+      //   usersDbData=JSON.parse(usersDbData);
+      //   if(usersDbData[data.email]){
+      //     result={"error":true,"message":"email already exists"}
+      //   }else{
+       
+      //   usersDbData[data.email]=data;
+  
+  
+  
+      //   fs.writeFileSync(path.resolve('files/users.json'),JSON.stringify(usersDbData))
+  
+      //  result = {"status":"created","data":`hello ${data.name} ${data.age}`};
+      //   }
+  
+      //  res.send(result)
       
       
       }

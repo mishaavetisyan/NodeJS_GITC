@@ -35,7 +35,7 @@ router.post('/upload',upload.single('file'), User.upload)
 
 router.post('/users-login', User.postLogin)
 
-router.post('/users-register', User.postRegister)
+router.post('/usrers-registe', User.postRegister)
 
 router.put('/users/:id', User.put)
 
